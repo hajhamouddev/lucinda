@@ -1,0 +1,10 @@
+@import "../styles/tokens.css";
+@import "../styles/components.css";
+@import "tailwindcss";
+
+body {
+  background-color: var(--color-canvas-base);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  text-align: start;
+}

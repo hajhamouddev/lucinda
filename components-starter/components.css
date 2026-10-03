@@ -1,0 +1,418 @@
+/**
+ * @file components.css
+ * @description Core Primitive Component System
+ * @brand hajhamouud.dev / Baby.eng Web Platform
+ * 
+ * Powered by tokens.css
+ * Covers 6 interaction states: default, hover, focus-visible, active, disabled, loading
+ * Uses CSS Logical Properties for zero-overhead Bi-directional (RTL/LTR) support
+ */
+
+/* ==========================================================================
+   1. BUTTONS (.btn, .btn-primary, .btn-secondary, .btn-outline)
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding-block: var(--space-2);
+  padding-inline: var(--space-4);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-fast) var(--ease-standard),
+              transform var(--duration-fast) var(--ease-standard),
+              opacity var(--duration-fast) var(--ease-standard);
+  outline: none;
+}
+
+/* State 3: Focused (Accessible Focus Ring) */
+.btn:focus-visible {
+  box-shadow: var(--ring-focus);
+}
+
+/* State 4: Active (Pressed feedback) */
+.btn:active:not(:disabled):not([aria-disabled="true"]):not(.is-loading) {
+  transform: translateY(1px);
+}
+
+/* State 5: Disabled */
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+  box-shadow: none !important;
+}
+
+/* State 6: Loading Spinner */
+.btn.is-loading,
+.btn[data-loading="true"] {
+  cursor: wait;
+  pointer-events: none;
+  color: transparent !important;
+}
+
+.btn.is-loading::after,
+.btn[data-loading="true"]::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 50%;
+  top: 50%;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-inline-start: -0.5625rem;
+  margin-top: -0.5625rem;
+  border: 2px solid currentColor;
+  border-color: var(--color-text-primary) transparent var(--color-text-primary) transparent;
+  border-radius: var(--radius-full);
+  animation: btn-spinner 0.65s linear infinite;
+}
+
+.btn-primary.is-loading::after,
+.btn-primary[data-loading="true"]::after {
+  border-color: var(--color-accent-contrast) transparent var(--color-accent-contrast) transparent;
+}
+
+@keyframes btn-spinner {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* --- Button Variant: Primary --- */
+.btn-primary {
+  background-color: var(--color-accent-base);
+  color: var(--color-accent-contrast);
+  border-color: var(--color-accent-base);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover:not(:disabled):not([aria-disabled="true"]) {
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:active:not(:disabled):not([aria-disabled="true"]) {
+  background-color: var(--color-accent-active);
+  border-color: var(--color-accent-active);
+}
+
+/* --- Button Variant: Secondary --- */
+.btn-secondary {
+  background-color: var(--color-canvas-subtle);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-default);
+}
+
+.btn-secondary:hover:not(:disabled):not([aria-disabled="true"]) {
+  background-color: var(--color-surface-dim);
+  border-color: var(--color-border-strong);
+}
+
+.btn-secondary:active:not(:disabled):not([aria-disabled="true"]) {
+  background-color: var(--color-border-subtle);
+}
+
+/* --- Button Variant: Outline --- */
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-text-primary);
+  border-color: var(--color-border-strong);
+}
+
+.btn-outline:hover:not(:disabled):not([aria-disabled="true"]) {
+  background-color: var(--color-canvas-subtle);
+  border-color: var(--color-text-primary);
+}
+
+.btn-outline:active:not(:disabled):not([aria-disabled="true"]) {
+  background-color: var(--color-surface-dim);
+}
+
+
+/* ==========================================================================
+   2. INPUT FIELDS (.form-group, .form-label, .form-input, .form-hint, .form-error)
+   ========================================================================== */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+  margin-block-end: var(--space-4);
+  text-align: start;
+}
+
+.form-label {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.form-label .required-indicator {
+  color: var(--color-danger-base);
+}
+
+.form-input {
+  width: 100%;
+  padding-block: var(--space-2);
+  padding-inline: var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--color-text-primary);
+  background-color: var(--color-surface-raised);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  outline: none;
+  text-align: start;
+  transition: border-color var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-fast) var(--ease-standard),
+              background-color var(--duration-fast) var(--ease-standard);
+}
+
+.form-input::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.8;
+}
+
+/* Input State 2: Hover */
+.form-input:hover:not(:disabled):not([aria-disabled="true"]):not([readonly]) {
+  border-color: var(--color-border-strong);
+}
+
+/* Input State 3: Focused */
+.form-input:focus-visible,
+.form-input:focus {
+  border-color: var(--color-accent-base);
+  box-shadow: var(--ring-focus);
+}
+
+/* Input State 5: Disabled */
+.form-input:disabled,
+.form-input[aria-disabled="true"] {
+  background-color: var(--color-canvas-subtle);
+  color: var(--color-text-disabled);
+  border-color: var(--color-border-subtle);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Input Error State */
+.form-group.has-error .form-input,
+.form-input[aria-invalid="true"] {
+  border-color: var(--color-danger-base);
+}
+
+.form-group.has-error .form-input:focus,
+.form-input[aria-invalid="true"]:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-canvas-base), 0 0 0 4px var(--color-danger-base);
+}
+
+.form-error {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--color-danger-base);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-block-start: var(--space-1);
+}
+
+.form-hint {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-block-start: var(--space-1);
+}
+
+
+/* ==========================================================================
+   3. CARDS (.card, .card-header, .card-body, .card-footer, .card-interactive)
+   ========================================================================== */
+
+.card {
+  background-color: var(--color-surface-raised);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow var(--duration-normal) var(--ease-standard),
+              border-color var(--duration-normal) var(--ease-standard),
+              transform var(--duration-normal) var(--ease-standard);
+  text-align: start;
+}
+
+.card-interactive {
+  cursor: pointer;
+}
+
+.card-interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--color-border-default);
+}
+
+.card-interactive:focus-visible {
+  box-shadow: var(--ring-focus);
+}
+
+.card-header {
+  margin-block-end: var(--space-4);
+}
+
+.card-title {
+  font-family: var(--font-sans);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.card-subtitle {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-block-start: var(--space-1);
+}
+
+.card-body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--color-text-secondary);
+  flex: 1 1 auto;
+}
+
+.card-footer {
+  margin-block-start: var(--space-6);
+  padding-block-start: var(--space-4);
+  border-block-start: 1px solid var(--color-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+
+/* ==========================================================================
+   4. MODALS & DIALOGS (.modal-backdrop, .modal-dialog)
+   ========================================================================== */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(9, 13, 22, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duration-normal) var(--ease-standard),
+              visibility var(--duration-normal) var(--ease-standard);
+}
+
+.modal-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-dialog {
+  background-color: var(--color-surface-overlay);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  width: 100%;
+  max-width: 32rem; /* 512px - Golden ratio ergonomic reading width */
+  padding: var(--space-6);
+  position: relative;
+  transform: scale(0.96) translateY(8px);
+  transition: transform var(--duration-normal) var(--ease-standard);
+  text-align: start;
+}
+
+.modal-backdrop.is-open .modal-dialog {
+  transform: scale(1) translateY(0);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-block-end: var(--space-4);
+}
+
+.modal-title {
+  font-family: var(--font-sans);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: var(--space-1);
+  border-radius: var(--radius-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--duration-fast), background-color var(--duration-fast);
+}
+
+.modal-close:hover {
+  color: var(--color-text-primary);
+  background-color: var(--color-canvas-subtle);
+}
+
+.modal-close:focus-visible {
+  box-shadow: var(--ring-focus);
+}
+
+.modal-body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--color-text-secondary);
+  margin-block-end: var(--space-6);
+}
+
+.modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}

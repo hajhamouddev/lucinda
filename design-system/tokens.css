@@ -1,0 +1,235 @@
+/**
+ * @file tokens.css
+ * @description Core Design Tokens & Architectural Variables
+ * @brand hajhamouud.dev / Baby.eng Web Platform
+ * 
+ * Complies with:
+ * - 60-30-10 Chromatic Rule (Canvas, Structural, Accent)
+ * - 8pt/4pt Mathematical Spatial Grid & Golden Ratio proportions
+ * - Fluid Typography with clamp() across 360px - 1440px viewports
+ * - CSS Logical Properties for zero-overhead Bi-directional (RTL/LTR) support
+ * - WCAG AA Contrast Compliance (> 4.5:1 text, > 3:1 UI elements)
+ */
+
+:root {
+  /* ==========================================================================
+     1. COLOR SYSTEM (60-30-10 ARCHITECTURE) - LIGHT MODE (WARM ALABASTER)
+     ========================================================================== */
+
+  /* 60% DOMINANT (CANVAS & SURFACES) */
+  --color-canvas-base: #f8fafc;        /* Slate 50 - Primary canvas surface */
+  --color-canvas-subtle: #f1f5f9;      /* Slate 100 - Secondary grouping canvas */
+  --color-surface-raised: #ffffff;     /* Pure Card & Dialog surface */
+  --color-surface-overlay: #ffffff;    /* Modals & Dropdown background */
+  --color-surface-dim: #e2e8f0;        /* Slate 200 - Inset/Depressed surfaces */
+
+  /* 30% STRUCTURAL (TEXT, BORDERS & CONTAINERS) */
+  --color-text-primary: #0f172a;       /* Slate 900 - High contrast readable text */
+  --color-text-secondary: #334155;     /* Slate 700 - Balanced body text (WCAG AAA) */
+  --color-text-muted: #64748b;         /* Slate 500 - Captions, metadata, icons */
+  --color-text-disabled: #94a3b8;      /* Slate 400 - Disabled state text */
+  
+  --color-border-subtle: #e2e8f0;      /* Slate 200 - Delicate dividers */
+  --color-border-default: #cbd5e1;     /* Slate 300 - Standard structural borders */
+  --color-border-strong: #94a3b8;      /* Slate 400 - Active or emphasized outlines */
+
+  /* 10% ACCENT & ACTION (PRIMARY FOCUS & INTENT) */
+  --color-accent-base: #2563eb;        /* Royal Blue 600 - High-intent CTA */
+  --color-accent-hover: #1d4ed8;       /* Blue 700 - Hover state */
+  --color-accent-active: #1e40af;      /* Blue 800 - Pressed/Active state */
+  --color-accent-subtle: #eff6ff;      /* Blue 50 - Accent surface tint */
+  --color-accent-contrast: #ffffff;    /* High contrast text on accent */
+  --color-focus-ring: #3b82f6;         /* Accessible Focus Indicator */
+
+  /* SEMANTIC & STATUS STATES */
+  --color-success-base: #16a34a;       /* Emerald 600 */
+  --color-success-subtle: #f0fdf4;
+  --color-warning-base: #d97706;       /* Amber 600 */
+  --color-warning-subtle: #fffbeb;
+  --color-danger-base: #dc2626;        /* Rose/Red 600 */
+  --color-danger-subtle: #fef2f2;
+  --color-info-base: #0284c7;          /* Sky 600 */
+  --color-info-subtle: #f0f9ff;
+
+  /* ==========================================================================
+     2. SPATIAL GEOMETRY & 8PT GRID
+     ========================================================================== */
+  --space-1: 0.25rem;   /* 4px  - Micro optical adjust */
+  --space-2: 0.5rem;    /* 8px  - Base grid increment */
+  --space-3: 0.75rem;   /* 12px - Intermediate grouping */
+  --space-4: 1rem;      /* 16px - Standard component padding */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px - Container padding */
+  --space-8: 2rem;      /* 32px - Section spacing */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px - Major layout breaks */
+  --space-16: 4rem;     /* 64px - Hero and section padding */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+
+  /* ==========================================================================
+     3. SHAPE GEOMETRY & CORNER RADII
+     ========================================================================== */
+  --radius-xs: 2px;
+  --radius-sm: 4px;     /* Rectilinear / Technical */
+  --radius-md: 8px;     /* Sculpted / Balanced default */
+  --radius-lg: 12px;    /* Cards & Container grouping */
+  --radius-xl: 16px;    /* Floating Modals / Hero elements */
+  --radius-2xl: 24px;   /* Prominent interactive panels */
+  --radius-full: 9999px;/* Pill buttons, badges & avatars */
+
+  /* ==========================================================================
+     4. FLUID TYPOGRAPHY HIERARCHY (CLAMP SCALING 360px -> 1440px)
+     ========================================================================== */
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Fluid Font Sizes: clamp(min, preferred, max) */
+  --text-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem);       /* 12px -> 13px */
+  --text-sm: clamp(0.875rem, 0.84rem + 0.18vw, 0.9375rem);      /* 14px -> 15px */
+  --text-base: clamp(1rem, 0.96rem + 0.22vw, 1.0625rem);         /* 16px -> 17px */
+  --text-lg: clamp(1.125rem, 1.06rem + 0.35vw, 1.25rem);         /* 18px -> 20px */
+  --text-xl: clamp(1.25rem, 1.15rem + 0.55vw, 1.5rem);           /* 20px -> 24px */
+  --text-2xl: clamp(1.5rem, 1.35rem + 0.85vw, 1.875rem);         /* 24px -> 30px */
+  --text-3xl: clamp(1.875rem, 1.62rem + 1.4vw, 2.375rem);        /* 30px -> 38px */
+  --text-4xl: clamp(2.25rem, 1.88rem + 2.1vw, 3.125rem);         /* 36px -> 50px */
+  --text-5xl: clamp(2.75rem, 2.2rem + 3vw, 4rem);                /* 44px -> 64px */
+
+  /* Line Heights (Vertical Rhythm) */
+  --leading-tight: 1.15;  /* Large display headlines */
+  --leading-snug: 1.3;    /* Subheadings (H2, H3) */
+  --leading-normal: 1.55; /* Body prose reading length (45-75 chars) */
+  --leading-relaxed: 1.75;/* Expanded editorial text */
+
+  /* Letter Spacing (Tracking) */
+  --tracking-tighter: -0.035em; /* Large Bold Headings */
+  --tracking-tight: -0.015em;   /* Display Subtitles */
+  --tracking-normal: 0em;       /* Body */
+  --tracking-wide: 0.05em;      /* Uppercase labels & tags */
+
+  /* ==========================================================================
+     5. ELEVATION & MULTI-LAYER AMBIENT SHADOWS
+     ========================================================================== */
+  --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+
+  /* ==========================================================================
+     6. INTERACTION & TRANSITION DYNAMICS
+     ========================================================================== */
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1); /* Natural ergonomic curve */
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+
+  /* Focus ring definition */
+  --ring-focus: 0 0 0 2px var(--color-canvas-base), 0 0 0 4px var(--color-focus-ring);
+}
+
+/* ==========================================================================
+   DARK THEME (DEEP CHARCOAL SLATE - AVOIDS HARSH #000000)
+   ========================================================================== */
+[data-theme="dark"],
+.dark {
+  /* 60% DOMINANT (CANVAS & SURFACES) */
+  --color-canvas-base: #090d16;        /* Deep Obsidian-Slate */
+  --color-canvas-subtle: #0f172a;      /* Slate 900 - Secondary surface */
+  --color-surface-raised: #1e293b;     /* Slate 800 - Elevated Card surface */
+  --color-surface-overlay: #1e293b;    /* Slate 800 - Modals & Overlays */
+  --color-surface-dim: #020617;        /* Inset deep areas */
+
+  /* 30% STRUCTURAL (TEXT, BORDERS & CONTAINERS) */
+  --color-text-primary: #f8fafc;       /* Slate 50 - High contrast reading */
+  --color-text-secondary: #cbd5e1;     /* Slate 300 - Relaxed body text */
+  --color-text-muted: #94a3b8;         /* Slate 400 - Metadata & subtle elements */
+  --color-text-disabled: #475569;      /* Slate 600 - Disabled text */
+
+  --color-border-subtle: #1e293b;      /* Slate 800 */
+  --color-border-default: #334155;     /* Slate 700 */
+  --color-border-strong: #64748b;      /* Slate 500 */
+
+  /* 10% ACCENT & ACTION */
+  --color-accent-base: #3b82f6;        /* Blue 500 - Luminous CTA in dark mode */
+  --color-accent-hover: #60a5fa;       /* Blue 400 */
+  --color-accent-active: #2563eb;      /* Blue 600 */
+  --color-accent-subtle: rgba(59, 130, 246, 0.12);
+  --color-accent-contrast: #0f172a;
+  --color-focus-ring: #60a5fa;
+
+  /* SEMANTIC & STATUS STATES */
+  --color-success-base: #22c55e;
+  --color-success-subtle: rgba(34, 197, 94, 0.12);
+  --color-warning-base: #f59e0b;
+  --color-warning-subtle: rgba(245, 158, 11, 0.12);
+  --color-danger-base: #ef4444;
+  --color-danger-subtle: rgba(239, 68, 68, 0.12);
+  --color-info-base: #38bdf8;
+  --color-info-subtle: rgba(56, 189, 248, 0.12);
+
+  /* ELEVATION IN DARK THEME */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+
+  --ring-focus: 0 0 0 2px var(--color-canvas-base), 0 0 0 4px var(--color-focus-ring);
+}
+
+/* ==========================================================================
+   7. CORE COMPONENT STATE UTILITIES (6 INTERACTION STATES)
+   ========================================================================== */
+
+/* State 1: Default Base */
+.interactive-element {
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-fast) var(--ease-standard),
+              opacity var(--duration-fast) var(--ease-standard);
+  outline: none;
+}
+
+/* State 2: Hover */
+.interactive-element:hover:not(:disabled):not([aria-disabled="true"]) {
+  cursor: pointer;
+}
+
+/* State 3: Focused (WCAG AA Focus Visible) */
+.interactive-element:focus-visible {
+  box-shadow: var(--ring-focus);
+}
+
+/* State 4: Active / Pressed */
+.interactive-element:active:not(:disabled):not([aria-disabled="true"]) {
+  transform: translateY(1px);
+}
+
+/* State 5: Disabled */
+.interactive-element:disabled,
+.interactive-element[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* State 6: Loading */
+.interactive-element[data-loading="true"] {
+  cursor: wait;
+  position: relative;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   8. CSS LOGICAL PROPERTIES FOUNDATION (NATIVE BI-DIRECTIONAL RTL/LTR)
+   ========================================================================== */
+
+/* Base logical text-alignment helper */
+[dir="rtl"] {
+  text-align: start;
+}
+
+[dir="ltr"] {
+  text-align: start;
+}
