@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useCart } from "@/context/CartContext";
+import { siteConfig } from "@/config/site";
 
 interface FormErrors {
   fullName?: string;
@@ -19,7 +20,6 @@ export function CheckoutModal() {
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
   const [notes, setNotes] = useState("");
-  const [paymentMethod] = useState("cod"); // Cash on Delivery
 
   // State
   const [errors, setErrors] = useState<FormErrors>({});
@@ -28,6 +28,20 @@ export function CheckoutModal() {
   const [orderId, setOrderId] = useState("");
 
   const modalRef = useRef<HTMLDivElement>(null);
+
+  const handleModalClose = React.useCallback(() => {
+    if (orderConfirmed) {
+      clearCart();
+      setOrderConfirmed(false);
+      setFullName("");
+      setPhone("");
+      setCity("");
+      setAddress("");
+      setNotes("");
+      setErrors({});
+    }
+    closeCheckout();
+  }, [orderConfirmed, clearCart, closeCheckout]);
 
   // Close on Escape key press
   useEffect(() => {
@@ -38,7 +52,7 @@ export function CheckoutModal() {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isCheckoutOpen, isSubmitting]);
+  }, [isCheckoutOpen, isSubmitting, handleModalClose]);
 
   // Lock body scroll when modal is active
   useEffect(() => {
@@ -51,20 +65,6 @@ export function CheckoutModal() {
       document.body.style.overflow = "";
     };
   }, [isCheckoutOpen]);
-
-  const handleModalClose = () => {
-    if (orderConfirmed) {
-      clearCart();
-      setOrderConfirmed(false);
-      setFullName("");
-      setPhone("");
-      setCity("");
-      setAddress("");
-      setNotes("");
-      setErrors({});
-    }
-    closeCheckout();
-  };
 
   const validate = (): boolean => {
     const newErrors: FormErrors = {};
@@ -148,7 +148,7 @@ export function CheckoutModal() {
             </h2>
 
             <p className="text-[var(--color-text-secondary)] text-sm sm:text-base max-w-lg leading-relaxed mb-8">
-              شكراً لاختيارك <strong className="text-[var(--color-text-primary)]">Baby.eng</strong>. يجري الآن تجهيز عتادك بعناية، وسيتصل بك مندوب التوصيل على الرقم{" "}
+              شكراً لاختيارك <strong className="text-[var(--color-text-primary)]">{siteConfig.name}</strong>. يجري الآن تجهيز عتادك بعناية، وسيتصل بك مندوب التوصيل على الرقم{" "}
               <span className="font-mono font-bold dir-ltr inline-block text-[var(--color-text-primary)]">{phone}</span> لتأكيد موعد التسليم والدفع عند الاستلام.
             </p>
 

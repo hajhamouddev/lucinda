@@ -4,12 +4,16 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 
 export interface CartItem {
   id: string;
+  productId?: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   price: number;
-  priceDisplay: string;
+  priceDisplay?: string;
   quantity: number;
   category?: string;
+  selectedSize?: string;
+  selectedColor?: { name: string; hex: string };
+  image?: string;
 }
 
 interface CartContextType {
@@ -21,7 +25,7 @@ interface CartContextType {
   toggleCart: () => void;
   openCheckout: () => void;
   closeCheckout: () => void;
-  addItem: (item: Omit<CartItem, "quantity">) => void;
+  addItem: (item: Omit<CartItem, "quantity">, quantity?: number) => void;
   removeItem: (id: string) => void;
   updateQuantity: (id: string, delta: number) => void;
   clearCart: () => void;
@@ -31,7 +35,7 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-const CART_STORAGE_KEY = "baby_eng_storefront_cart_v1";
+const CART_STORAGE_KEY = "lucinda_storefront_cart_v1";
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
@@ -46,13 +50,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed)) {
-          setItems(parsed);
+          queueMicrotask(() => {
+            setItems(parsed);
+          });
         }
       }
     } catch (error) {
       console.warn("Cart storage read failed:", error);
     } finally {
-      setIsHydrated(true);
+      queueMicrotask(() => {
+        setIsHydrated(true);
+      });
     }
   }, []);
 
@@ -77,15 +85,28 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   };
   const closeCheckout = () => setIsCheckoutOpen(false);
 
-  const addItem = (item: Omit<CartItem, "quantity">) => {
+  const addItem = (item: Omit<CartItem, "quantity">, quantityToAdd = 1) => {
+    const qty = Math.max(1, quantityToAdd);
+    // Composite key ensures different size or color creates separate item
+    const compositeId = item.id.includes("__")
+      ? item.id
+      : `${item.id}__${item.selectedSize || "std"}__${item.selectedColor?.name || "std"}`;
+
+    const normalizedItem: CartItem = {
+      ...item,
+      id: compositeId,
+      productId: item.productId || item.id,
+      quantity: qty,
+    };
+
     setItems((prev) => {
-      const existing = prev.find((i) => i.id === item.id);
+      const existing = prev.find((i) => i.id === compositeId);
       if (existing) {
         return prev.map((i) =>
-          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+          i.id === compositeId ? { ...i, quantity: i.quantity + qty } : i
         );
       }
-      return [...prev, { ...item, quantity: 1 }];
+      return [...prev, normalizedItem];
     });
     setIsOpen(true);
   };

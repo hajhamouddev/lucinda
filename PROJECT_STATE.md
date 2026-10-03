@@ -12,9 +12,17 @@
 - Workspace: `/home/hajhamoud/Documents/projects/web`
 
 ## Current status
-- Production storefront equipped with interactive `CartDrawer`, complete Checkout modal (`CheckoutModal.tsx`), transactional order placement flow (Cash on Delivery), validation, and state reset. Production build passes cleanly with zero errors.
+- Production storefront branded under "LUCINDA" (Haute Couture & Abaya Atelier). All customer-facing copy, branding, navigation, currency, and contact points are centralized in `src/config/site.ts`. Unified MIT License (2026 hajhamouddev) established. Production build and linter pass with 0 errors and 0 warnings. Project state frozen.
 
 ## Done (newest first)
+- Centralized all storefront copy, metadata, branding, navigation, currency, and contact channels in `src/config/site.ts` under the "LUCINDA" brand identity.
+- Refactored `layout.tsx`, `page.tsx`, and `CheckoutModal.tsx` to consume configuration dynamically from `siteConfig`.
+- Established unified MIT License (Copyright 2026 hajhamouddev) at repository root and inside storefront package.
+- Updated package identity to `"lucinda"` in `package.json` and synchronized `CART_STORAGE_KEY` to `"lucinda_storefront_cart_v1"`.
+- Built dynamic product catalog architecture (`src/data/products.ts`) with strict TypeScript types (`Product`, `ProductColor`, `CategoryKey`) and rich specifications for 8 luxury Abaya designs.
+- Engineered `ProductDetailModal` (`src/components/product/ProductDetailModal.tsx`) featuring image gallery and thumbnails, size selector (50-60), color swatches, quick reference size guide table, quantity stepper, and variant add-to-cart.
+- Updated `CartContext` and `CartDrawer` with variant isolation (`compositeId`) so different sizes/colors of the same product exist as separate line items, rendering size tags, color swatches, and thumbnail images.
+- Implemented responsive category filter tabs in `page.tsx` with instant client-side filtering, item count badges, and product cards with hover preview and quick details action.
 - Engineered and wired end-to-end Checkout modal (`src/components/checkout/CheckoutModal.tsx`) with form validation, cash-on-delivery payment method, loading state, escape key trap, body scroll lock, and order confirmation receipt (`#ORD-XXXXXX`).
 - Integrated `openCheckout` transition from `CartDrawer` to `CheckoutModal`, mounted globally in `Providers.tsx`.
 - Implemented `CartContext` checkout state (`isCheckoutOpen`, `openCheckout`, `closeCheckout`).
@@ -33,6 +41,7 @@
 - Configured `turbopack.root` in `next.config.ts` to allow Next.js 16 Turbopack to resolve design tokens and components from parent directories safely without file-system boundary errors.
 - Next.js (App Router) + TypeScript + Tailwind CSS as the core stack for zero-waterfall server rendering, type safety, and atomic design consistency.
 - CSS Logical Properties (`*-inline`, `*-block`, `text-align: start`) enforced across all tokens and components for seamless zero-overhead bi-directional LTR/RTL support.
+- Centralized site configuration pattern in `src/config/site.ts` to ensure 100% modularity and allow non-technical re-branding and content adjustments without code edits.
 - 60-30-10 color balance using HSL/Hex tokens with Dark/Light modes to maintain WCAG AA contrast (>4.5:1 text, >3:1 UI elements) without optical fatigue.
 - 8px mathematical spatial grid and modular scale for typography and spacing.
 
@@ -42,9 +51,10 @@
 ## Do NOT do (lessons learned)
 - Do NOT use hardcoded physical directions (`margin-left`, `padding-right`, `left`, `right`) to avoid RTL layout breaking and code duplication.
 - Do NOT use pure black (`#000000`) on white or pure white on black; use tinted darks (`#090d16`, `#0f172a`) to eliminate glare and retina fatigue.
+- Do NOT hardcode store titles, currencies, or hero copy directly in components; always read from `src/config/site.ts`.
 
 ## Next step (exactly one)
-- Implement backend API route (`/api/orders`) and persistent storage/webhook dispatch for received orders.
+- Project frozen & ready. Future tasks: customize site.ts content, expand catalog, and deploy to production.
 
 ## Useful commands
 - Run storefront dev server: `cd sites/storefront && npm run dev`

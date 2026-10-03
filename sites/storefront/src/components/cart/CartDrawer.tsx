@@ -116,17 +116,25 @@ export function CartDrawer() {
                   key={item.id}
                   className="p-4 rounded-[var(--radius-lg)] bg-[var(--color-canvas-subtle)] border border-[var(--color-border-subtle)] flex gap-4 items-start"
                 >
-                  {/* Item Icon Placeholder */}
-                  <div className="w-14 h-14 rounded-[var(--radius-md)] bg-[var(--color-surface-raised)] border border-[var(--color-border-subtle)] flex items-center justify-center text-[var(--color-accent-base)] flex-shrink-0">
-                    <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="1.5"
-                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-                      />
-                    </svg>
-                  </div>
+                  {/* Item Image or Icon */}
+                  {item.image ? (
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-14 h-16 rounded-[var(--radius-md)] object-cover border border-[var(--color-border-subtle)] flex-shrink-0"
+                    />
+                  ) : (
+                    <div className="w-14 h-14 rounded-[var(--radius-md)] bg-[var(--color-surface-raised)] border border-[var(--color-border-subtle)] flex items-center justify-center text-[var(--color-accent-base)] flex-shrink-0">
+                      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="1.5"
+                          d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                        />
+                      </svg>
+                    </div>
+                  )}
 
                   {/* Item Details */}
                   <div className="flex-1 min-w-0">
@@ -151,8 +159,25 @@ export function CartDrawer() {
                       </button>
                     </div>
 
-                    <div className="text-xs text-[var(--color-text-muted)] mb-3">
-                      {item.category || "منتج منصة"}
+                    {/* Variant Pills (Size & Color) */}
+                    <div className="flex flex-wrap items-center gap-1.5 my-1.5 text-xs text-[var(--color-text-muted)]">
+                      {item.selectedSize && (
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-[var(--radius-sm)] bg-[var(--color-surface-raised)] border border-[var(--color-border-subtle)] font-mono text-[11px] font-bold text-[var(--color-text-secondary)]">
+                          مقاس: {item.selectedSize}
+                        </span>
+                      )}
+                      {item.selectedColor && (
+                        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[var(--radius-sm)] bg-[var(--color-surface-raised)] border border-[var(--color-border-subtle)] text-[11px] text-[var(--color-text-secondary)]">
+                          <span
+                            className="w-2.5 h-2.5 rounded-full border border-black/10 inline-block"
+                            style={{ backgroundColor: item.selectedColor.hex }}
+                          />
+                          <span>{item.selectedColor.name}</span>
+                        </span>
+                      )}
+                      {!item.selectedSize && !item.selectedColor && (
+                        <span>{item.category || "منتج منصة"}</span>
+                      )}
                     </div>
 
                     <div className="flex items-center justify-between">

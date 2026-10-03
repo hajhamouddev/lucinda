@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "@/components/providers/Providers";
+import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "متجر المنصة | Baby.eng Storefront",
-  description: "منصة تجارة إلكترونية فائقة السرعة مصممة وفق أرقى معايير تجربة المستخدم والوصولية العالمية.",
+  title: `${siteConfig.name} | ${siteConfig.tagline}`,
+  description: siteConfig.description,
 };
 
 export default function RootLayout({
@@ -13,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ar" dir="rtl" data-theme="light">
+    <html lang={siteConfig.locale} dir={siteConfig.dir} data-theme="light">
       <head>
         <meta name="color-scheme" content="light dark" />
       </head>
